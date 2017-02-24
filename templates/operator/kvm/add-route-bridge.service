@@ -1,0 +1,11 @@
+[Unit]
+Description=Add route to reach local network
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/ip route add ${HOST_PUBLIC_IP} dev eth0 via ${BRIDGE_IP}
+
+[Install]
+WantedBy=multi-user.target
