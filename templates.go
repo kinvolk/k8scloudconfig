@@ -1002,12 +1002,13 @@ write_files:
     users:
     - name: proxy
       user:
-        client-certificate: /etc/kubernetes/ssl/worker-crt.pem
-        client-key: /etc/kubernetes/ssl/worker-key.pem
+        client-certificate: /etc/kubernetes/ssl/apiserver-crt.pem
+        client-key: /etc/kubernetes/ssl/apiserver-key.pem
     clusters:
     - name: local
       cluster:
-        certificate-authority: /etc/kubernetes/ssl/worker-ca.pem
+        certificate-authority: /etc/kubernetes/ssl/apiserver-ca.pem
+        server: https://{{.Cluster.Kubernetes.API.Domain}}
     contexts:
     - context:
         cluster: local
@@ -1023,12 +1024,13 @@ write_files:
     users:
     - name: kubelet
       user:
-        client-certificate: /etc/kubernetes/ssl/worker-crt.pem
-        client-key: /etc/kubernetes/ssl/worker-key.pem
+        client-certificate: /etc/kubernetes/ssl/apiserver-crt.pem
+        client-key: /etc/kubernetes/ssl/apiserver-key.pem
     clusters:
     - name: local
       cluster:
-        certificate-authority: /etc/kubernetes/ssl/worker-ca.pem
+        certificate-authority: /etc/kubernetes/ssl/apiserver-ca.pem
+        server: https://{{.Cluster.Kubernetes.API.Domain}}
     contexts:
     - context:
         cluster: local
