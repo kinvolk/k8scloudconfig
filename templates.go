@@ -531,13 +531,13 @@ coreos:
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server-ca.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server-ca.pem to be written' && sleep 1; done"
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server-crt.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server-crt.pem to be written' && sleep 1; done"
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server-key.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server-key.pem to be written' && sleep 1; done"
-      ExecStart=/usr/bin/etcd2 --advertise-client-urls=https://{{.Cluster.Etcd.Domain}}:443,http://127.0.0.1:2383 \
+      ExecStart=/usr/bin/etcd2 --advertise-client-urls=https://{{.Cluster.Etcd.Domain}}:2379,http://localhost:4001 \
                                --data-dir=/etc/kubernetes/data/etcd/ \
-                               --initial-advertise-peer-urls=https://{{.Cluster.Etcd.Domain}}:443 \
+                               --initial-advertise-peer-urls=https://{{.Cluster.Etcd.Domain}}:2380 \
                                --listen-client-urls=https://0.0.0.0:2379,http://127.0.0.1:2383 \
                                --listen-peer-urls=https://${DEFAULT_IPV4}:2380 \
                                --initial-cluster-token k8s-etcd-cluster \
-                               --initial-cluster etcd0=https://{{.Cluster.Etcd.Domain}}:443 \
+                               --initial-cluster etcd0=https://{{.Cluster.Etcd.Domain}}:2380 \
                                --initial-cluster-state new \
                                --ca-file=/etc/kubernetes/ssl/etcd/server-ca.pem \
                                --cert-file=/etc/kubernetes/ssl/etcd/server-crt.pem \
